@@ -48,22 +48,5 @@ jobs:
           start: npm start
           wait-on: http://localhost:8080 
       - name: deploying
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: npm run deploy:full
-
-  simple_deployment_pipeline:
-    needs: [build_lint_test]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - name: npm install
-        run: npm install && cd frontend && npm install
-      - name: deploying
         uses: superfly/flyctl-actions/setup-flyctl@master
       - run: npm run deploy:full
-
