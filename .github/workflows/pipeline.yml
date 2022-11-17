@@ -21,8 +21,9 @@ jobs:
       - name: lint
         run: npm run lint
       - name: e2e tests
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4.2.0
         with: 
+          build: npm run build:ui
+          start: npm start
           command: npm run test:e2e
-          start: npm run dev
           wait-on: http://localhost:8080/
