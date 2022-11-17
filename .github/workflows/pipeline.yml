@@ -2,6 +2,7 @@ name: Deployment pipeline
 
 env:
   MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 on:
   push:
@@ -9,7 +10,23 @@ on:
       - master
 
 jobs:
-  simple_deployment_pipeline:
+  a_test_job:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: github context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: commits
+        env:
+          COMMITS: ${{ toJson(github.event.commits) }}
+        run: echo "$COMMITS"
+      - name: commit messages
+        env:
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run: echo "$COMMIT_MESSAGES"
+  build_lint_test:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -27,4 +44,20 @@ jobs:
         with:
           build: npm run build:ui
           start: npm start
-          wait-on: http://localhost:8080
+          wait-on: http://localhost:8080 
+  simple_deployment_pipeline:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: deploying
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: npm run deploy:full
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: "patch"
+          WITH_V: true
+
