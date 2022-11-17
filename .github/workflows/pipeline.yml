@@ -62,11 +62,11 @@ jobs:
     needs: [build_lint_test]
     runs-on: ubuntu-20.04
     steps:
-      - name: npm install 
-        run: npm install && cd frontend && npm install
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 
+      - name: npm install 
+        run: npm install && cd frontend && npm install
       - name: deploying
         uses: superfly/flyctl-actions/setup-flyctl@master
       - run: npm run deploy:full
