@@ -17,6 +17,6 @@ jobs:
       - name: cd backend
         run: cd backend
       - name: npm install
-        run: npm install
+        run: cd backend && npm install
       - name: lint
         run: npm run lint
