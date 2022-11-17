@@ -64,6 +64,6 @@ jobs:
       - name: npm install
         run: npm install && cd frontend && npm install
       - name: deploying
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: npm run deploy:full
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        run: npm run deploy:full
 
