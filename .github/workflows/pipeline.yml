@@ -49,6 +49,8 @@ jobs:
     needs: [build_lint_test]
     runs-on: ubuntu-20.04
     steps:
+      - name: npm install
+        run: npm install && cd frontend && npm install
       - name: deploying
         uses: actions/checkout@v3
         with:
