@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 0
       - name: deploying
         uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: npm run deploy
+      - run: npm run deploy:full
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
         env:
