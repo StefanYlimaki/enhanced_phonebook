@@ -18,6 +18,8 @@ jobs:
       - name: lint
         run: cd backend && npm run lint
       - name: e2e tests
-        run: cd backend && npm run test:e2e
-        start: npm run start
-        wait-on: http://localhost:8080
+        uses: cypress-io/github-action@v2
+        with: 
+          command: npm run test:e2e
+          start: npm run start
+          wait-on: http://localhost:8080
