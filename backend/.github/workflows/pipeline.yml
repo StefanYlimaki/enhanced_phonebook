@@ -14,12 +14,12 @@ jobs:
         with:
           node-version: '16'
       - name: npm install
-        run: cd backend && npm install
+        run: npm install
       - name: lint
-        run: cd backend && npm run lint
+        run: npm run lint
       - name: e2e tests
         uses: cypress-io/github-action@v2
         with: 
-          command: cd backend && npm run test:e2e
-          start: cd backend && npm start
+          command: npm run test:e2e
+          start: npm start
           wait-on: http://localhost:8080
