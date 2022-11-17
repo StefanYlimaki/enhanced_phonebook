@@ -46,6 +46,7 @@ jobs:
           start: npm start
           wait-on: http://localhost:8080 
   simple_deployment_pipeline:
+    needs: [build_lint_test]
     runs-on: ubuntu-20.04
     steps:
       - name: deploying
