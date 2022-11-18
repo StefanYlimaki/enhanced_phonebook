@@ -84,3 +84,4 @@ jobs:
           severity: info
           details: deploy_tag succeeded!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          
