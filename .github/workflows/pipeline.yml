@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   a_test_job:
@@ -50,8 +53,8 @@ jobs:
         if: ${{ failure() }}
         with: 
           severity: error
-          details: build_lint_test job failed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }} 
+          details: build_lint_test failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   deploy_and_tag:
     if: ${{ github.event_name == 'push' && contains(join(toJson(github.event.commits.*.message), ' '), '#skip') == false }}
     needs: [build_lint_test]
@@ -59,10 +62,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: npm install 
+        run: npm install && cd frontend && npm install
       - name: deploying
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: npm run deploy:full
+        run: npm run deploy:full
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
         env:
