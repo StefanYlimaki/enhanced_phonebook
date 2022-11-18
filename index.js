@@ -32,6 +32,14 @@ app.get('/info', (req, res) => {
   })
 })
 
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
+app.get('/version', (req, res) => {
+  res.send('7') // change this string to ensure a new version deployed
+})
+
 app.get('/api/persons', (req, response) => {
   Person.find({}).then((persons) => {
     response.json(persons)
