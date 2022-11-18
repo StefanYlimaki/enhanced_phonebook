@@ -12,4 +12,3 @@ jobs:
         url: https://stefanphonebook.fly.dev/
         max-attempts: 5
         retry-delay: 5s
-        

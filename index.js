@@ -32,12 +32,12 @@ app.get('/info', (req, res) => {
   })
 })
 
-app.get('/health', (req, res) => {
-  res.send('ok')
+app.get('/health', (request, response) => {
+  response.send('ok')
 })
 
-app.get('/version', (req, res) => {
-  res.send('7') // change this string to ensure a new version deployed
+app.get('/version', (request, response) => {
+  response.send('0.0.8')
 })
 
 app.get('/api/persons', (req, response) => {
