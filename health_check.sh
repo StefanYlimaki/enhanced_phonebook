@@ -1,6 +1,4 @@
 #!/bin/bash
-apt-get update && apt-get install curl
-
 res=$(curl -s https://stefanpokedex.fly.dev/health)
 
 echo $res
